@@ -9,13 +9,13 @@ function MarkdownEditor() {
   };
 
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
+    <div className="flex h-screen">
       <textarea
+        className="w-1/2 h-full resize-none border-4 border-green-600 p-2"
         value={markdown}
         onChange={handleChange}
-        style={{ width: '50%', height: '100%', resize: 'none' }}
       />
-      <div style={{ width: '50%', height: '100%', overflow: 'auto', padding: '1rem' }}>
+      <div className="w-1/2 h-full overflow-auto p-4 markdown-body">
         <ReactMarkdown>{markdown}</ReactMarkdown>
       </div>
     </div>

@@ -2,7 +2,7 @@ import MarkdownEditor from './MarkdownEditor';
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <MarkdownEditor />
     </div>
   );
