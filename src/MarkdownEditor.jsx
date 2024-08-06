@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 const todoListString = `
@@ -10,10 +10,21 @@ const todoListString = `
 
 function MarkdownEditor() {
   const [markdown, setMarkdown] = useState(todoListString);
+  const [jsonLines, setJsonLines] = useState([]);
+
+  useEffect(() => {
+    const lines = markdown.split('\n');
+    const jsonData = lines.map((line, index) => ({ id: index, content: line }));
+    setJsonLines(jsonData);
+  }, [markdown]);
 
   const handleChange = (event) => {
     setMarkdown(event.target.value);
   };
+
+  const processedMarkdown = jsonLines
+    .map(line => line.content.includes('cow') ? `${line.content} 🐮` : line.content)
+    .join('\n');
 
   return (
     <div className="flex h-full">
@@ -32,7 +43,7 @@ function MarkdownEditor() {
       </div>
 
       <div className="w-1/2 h-full overflow-auto border-4 border-purple-600 p-4 markdown-body">
-        <ReactMarkdown>{markdown}</ReactMarkdown>
+        <ReactMarkdown>{processedMarkdown}</ReactMarkdown>
       </div>
       
     </div>
