@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react';
+import RulesPane from './RulesPane';
+import InputPane from './InputPane';
+import RenderPane from './RenderPane';
+
+const todoListString = `
+## To-Do List
+- [ ] Task 1
+- [ ] Task 2
+- [ ] Task 3
+`;
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [markdown, setMarkdown] = useState(todoListString);
+  const [jsonLines, setJsonLines] = useState([]);
+
+  useEffect(() => {
+    const lines = markdown.split('\n');
+    const jsonData = lines.map((line, index) => ({ id: index, content: line }));
+    setJsonLines(jsonData);
+  }, [markdown]);
+
+  const handleInputChange = (event) => {
+    setMarkdown(event.target.value);
+  };
+
+  const processedMarkdown = jsonLines
+    .map(line => line.content.includes('cow') ? `${line.content} 🐮` : line.content)
+    .join('\n');
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className='h-screen'>
+      <h1 className="text-4xl font-bold text-center">NotesWorkShop</h1>
+      <div className="flex flex-col h-full">
+        <div className="flex h-3/5">
+          <InputPane markdown={markdown} handleInputChange={handleInputChange} />
+          <RenderPane processedMarkdown={processedMarkdown} />
+        </div>
+        <RulesPane />
       </div>
-      <h1 className="text-3xl font-bold text-purple-600">Vite + React</h1>
-      <div className="">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
