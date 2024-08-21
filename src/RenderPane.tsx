@@ -11,7 +11,7 @@ export default function RenderPane({ processedMarkdown }: RenderPaneProps) {
       <ReactMarkdown
         components={{
           li: ({ node, ...props }) => {
-            if (node.children[0].type === 'text') {
+            if (node?.children[0].type === 'text') {
               const content = node.children[0].value;
               if (content.startsWith('[x] ')) {
                 return <li><s>{content}</s></li>;
