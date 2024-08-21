@@ -1,32 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import RulesPane from './RulesPane';
 import InputPane from './InputPane';
 import RenderPane from './RenderPane';
-
-const todoListString = `
-## To-Do List
-- [ ] Task 1
-- [ ] Task 2
-- [ ] Task 3
-`;
+import { markdownString } from './App.type';
+import markdownProcessorEngine from './markdownProcessorEngine';
+import initialTodoListString from './assets/data/startingString';
 
 function App() {
-  const [markdown, setMarkdown] = useState(todoListString);
-  const [jsonLines, setJsonLines] = useState([]);
+  const [markdown, setMarkdown] = useState<markdownString>(initialTodoListString);
 
-  useEffect(() => {
-    const lines = markdown.split('\n');
-    const jsonData = lines.map((line, index) => ({ id: index, content: line }));
-    setJsonLines(jsonData);
-  }, [markdown]);
-
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMarkdown(event.target.value);
   };
 
-  const processedMarkdown = jsonLines
-    .map(line => line.content.includes('cow') ? `${line.content} 🐮` : line.content)
-    .join('\n');
+  const processedMarkdown = markdownProcessorEngine(markdown)
 
   return (
     <div className='h-screen'>

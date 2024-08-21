@@ -1,4 +1,11 @@
-export default function InputPane({ markdown, handleInputChange}) {
+import { markdownString } from './App.type';
+
+type InputPaneProps = {
+  markdown: markdownString;
+  handleInputChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+}
+
+export default function InputPane({ markdown, handleInputChange }: InputPaneProps) {
   return (
     <div className="w-3/5 h-full">
       <textarea
