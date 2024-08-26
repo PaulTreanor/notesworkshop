@@ -1,3 +1,5 @@
+import NewRulesForm from './NewRulesForm';
+
 type newRuleModalProps = {
   closeModal: () => void
   saveRule: () => void
@@ -9,8 +11,7 @@ export default function NewRuleModal({ closeModal, saveRule }: newRuleModalProps
           <div className="bg-white p-8 rounded-lg shadow-xl w-4/5 h-4/5 flex flex-col">
             <h3 className="text-2xl font-bold mb-6">Add New Rule</h3>
             <div className="flex-grow">
-              {/* Add your form or content here */}
-              <p>Add your form or content for the new rule here.</p>
+              <NewRulesForm />
             </div>
             <div className="flex justify-end mt-6">
               <button
@@ -21,7 +22,6 @@ export default function NewRuleModal({ closeModal, saveRule }: newRuleModalProps
               </button>
               <button
                 onClick={() => {
-                  // TODO: Implement save functionality
                   saveRule();
                   closeModal();
                 }}

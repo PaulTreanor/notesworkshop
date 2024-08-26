@@ -13,7 +13,7 @@ export default function RulesPane() {
 
   return (
     <div className="h-2/5 border-4 border-purple-600 p-4 overflow-auto">
-      <div>
+      <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold mb-4">Rules</h2>
         <button
           onClick={openModal}
