@@ -2,8 +2,8 @@ import { markdownString } from '../../App.type';
 
 const initialTodoListString: markdownString = `
 ## To-Do List
-- [ ] Task 1
-- [ ] Task 2
+- [ ] Feed the dog 
+- [ ] Put out the bins (important)
 - [ ] Task 3
 `;
 
