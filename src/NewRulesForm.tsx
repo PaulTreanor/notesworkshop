@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { ruleType } from './rules/rules.type'
+import { useRules } from './context/rulesContext';
 
 const initialRule: ruleType = {
   rulesLabel: '',
@@ -7,7 +8,8 @@ const initialRule: ruleType = {
   effects: []
 }
 
-export default function NewRulesForm() {
+export default function NewRulesForm({ closeModal }: { closeModal: () => void }) {
+  const { addRule } = useRules();
 
   const [rule, setRule] = useState<ruleType>(initialRule);
   const [conditionType, setConditionType] = useState<string>('');
@@ -15,6 +17,16 @@ export default function NewRulesForm() {
   const [effectType, setEffectType] = useState<string>('');
   const [effectValue, setEffectValue] = useState<string>('');
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    addRule(rule);
+    setRule(initialRule);
+    setConditionType('');
+    setConditionValue('');
+    setEffectType('');
+    setEffectValue('');
+    closeModal();
+  };
 
   const handleAddCondition = () => {
     let newCondition: conditionsArrayType[number];
@@ -48,7 +60,7 @@ export default function NewRulesForm() {
 
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="ruleLabel" className="block text-lg font-medium text-gray-700">
             Rule Label
@@ -163,6 +175,12 @@ export default function NewRulesForm() {
             </button>
           </div>
         </div>
+        <button
+          type="submit"
+          className="bg-green-500 text-white px-4 py-2 rounded mt-4"
+        >
+          Save Rule
+        </button>
       </form>
     </div>
   )

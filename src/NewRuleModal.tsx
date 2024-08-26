@@ -11,7 +11,7 @@ export default function NewRuleModal({ closeModal, saveRule }: newRuleModalProps
           <div className="bg-white p-8 rounded-lg shadow-xl w-4/5 h-4/5 flex flex-col">
             <h3 className="text-2xl font-bold mb-6">Add New Rule</h3>
             <div className="flex-grow">
-              <NewRulesForm />
+              <NewRulesForm closeModal={closeModal}/>
             </div>
             <div className="flex justify-end mt-6">
               <button
@@ -19,15 +19,6 @@ export default function NewRuleModal({ closeModal, saveRule }: newRuleModalProps
                 className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-3 px-6 rounded mr-4"
               >
                 Cancel
-              </button>
-              <button
-                onClick={() => {
-                  saveRule();
-                  closeModal();
-                }}
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
-              >
-                Save Rule
               </button>
             </div>
           </div>
