@@ -34,7 +34,7 @@ const rules = [sampleRule1, sampleRule2]
  * Operate on the JSON 
  * Join the JSON back into a markdownString to be rendered
  */
-const markdownProcessorEngine = (markdown: markdownString): markdownString => {
+const markdownProcessorEngine = (markdown: markdownString, rules: ruleType[]): markdownString => {
   const lines = markdown.split('\n');
   const jsonData = lines.map((line, index) => ({ id: index, content: line, isDone: false }));
 
@@ -45,7 +45,11 @@ const markdownProcessorEngine = (markdown: markdownString): markdownString => {
       const conditionsMet = rule.conditions.every(condition => {
         switch (condition.type) {
           case 'includesStrings':
-            return condition.value.some(str => processedItem.content.toLowerCase().includes(str.toLowerCase()));
+            return condition.value.some(str => 
+              str.split(',').some(word => 
+                processedItem.content.toLowerCase().includes(word.trim().toLowerCase())
+              )
+            );
           case 'isDone':
             return processedItem.content.startsWith('- [x]') === condition.value;
           // Add more condition types as needed

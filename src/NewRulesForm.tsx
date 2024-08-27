@@ -107,7 +107,7 @@ export default function NewRulesForm({ closeModal }: { closeModal: () => void })
                   type="text"
                   value={conditionValue}
                   onChange={(e) => setConditionValue(e.target.value)}
-                  placeholder="Enter text"
+                  placeholder="enter, comma, separated, text"
                   className="border-2 border-gray-300 rounded-md p-1"
                 />
               </>

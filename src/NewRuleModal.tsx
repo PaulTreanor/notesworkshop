@@ -2,10 +2,9 @@ import NewRulesForm from './NewRulesForm';
 
 type newRuleModalProps = {
   closeModal: () => void
-  saveRule: () => void
 }
 
-export default function NewRuleModal({ closeModal, saveRule }: newRuleModalProps) {
+export default function NewRuleModal({ closeModal }: newRuleModalProps) {
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
           <div className="bg-white p-8 rounded-lg shadow-xl w-4/5 h-4/5 flex flex-col">

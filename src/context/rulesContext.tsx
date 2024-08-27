@@ -1,6 +1,28 @@
 import  { createContext, useContext, useState, ReactNode } from 'react';
 import type { ruleType } from '../rules/rules.type';
 
+const sampleRules: ruleType[] = []
+//   {
+//     rulesLabel: 'cow',
+//     conditions: [
+//       { type: 'includesStrings', value: ['dog'] }
+//     ],
+//     effects: [
+//       { type: 'appendTextToItem', value: '🐾' }
+//     ]
+//   },
+//   {
+//     rulesLabel: 'urgent',
+//     conditions: [
+//       { type: 'isDone', value: false },
+//       { type: 'includesStrings', value: ['urgent', 'asap', 'important'] }
+//     ],
+//     effects: [
+//       { type: 'makeItemBold', value: true }
+//     ]
+//   }
+// ];
+
 interface RulesContextType {
   rules: ruleType[];
   addRule: (rule: ruleType) => void;
@@ -11,7 +33,7 @@ interface RulesContextType {
 const RulesContext = createContext<RulesContextType | undefined>(undefined);
 
 export function RulesProvider({ children }: { children: ReactNode }) {
-  const [rules, setRules] = useState<ruleType[]>([]);
+  const [rules, setRules] = useState<ruleType[]>(sampleRules);
 
   const addRule = (rule: ruleType) => {
     setRules([...rules, rule]);

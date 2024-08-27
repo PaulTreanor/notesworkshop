@@ -43,4 +43,4 @@ type ruleType = {
   effects: effectsArrayType
 }
 
-export type { ruleType };
+export type { ruleType, conditionsArrayType, effectsArrayType };
