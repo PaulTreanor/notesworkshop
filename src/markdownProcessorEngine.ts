@@ -1,33 +1,6 @@
 import { markdownString } from './App.type';
 import { ruleType } from './rules/rules.type';
 
-
-
-const sampleRule1: ruleType = {
-  rulesLabel: 'cow',
-  conditions: [
-    { type: 'includesStrings', value: ['dog'] }
-  ], 
-  effects: [
-    { type: 'appendTextToItem', value: '🐾' }
-  ]
-}
-
-
-const sampleRule2: ruleType = {
-  rulesLabel: 'urgent',
-  conditions: [
-    // { type: 'Starts with', value: ['important', 'asap', 'urgent'] },
-    { type: 'isDone', value: false },
-    { type: 'includesStrings', value: ['urgent', 'asap', 'important'] }
-  ], 
-  effects: [
-    { type: 'makeItemBold', value: true}
-  ]
-}
-
-const rules = [sampleRule1, sampleRule2]
-
 /**
  * On markdown change (user input), rerender triggers this func 
  * Split markdown into lines and store as JSON to be operated on
