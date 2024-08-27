@@ -32,13 +32,18 @@ type makeItemBoldEffectType = {
   value: boolean
 }
 
+type replaceWithEffectType = {
+  type: 'replaceWith',
+  value: string
+}
+
 // *** Conditions Array Type ***
 
 type conditionsArrayType = (includsStringConditionType | isDoneConditionType | startsWithConditionType)[]
 
 // *** Effects Array Type ***
 
-type effectsArrayType = (appendTextToItemEffectType | makeItemBoldEffectType)[]
+type effectsArrayType = (appendTextToItemEffectType | makeItemBoldEffectType | replaceWithEffectType)[]
 
 // *** Rule Type ***
 

@@ -10,6 +10,21 @@ const initialRule: ruleType = {
   effects: []
 }
 
+// Fix these types at some point
+
+type effectsArrayType = Array<
+  | { type: 'appendTextToItem'; value: string }
+  | { type: 'makeItemBold'; value: boolean }
+  | { type: 'replaceWith'; value: string }
+  >;
+
+type conditionsArrayType = Array<
+  | { type: 'isDone'; value: boolean }
+  | { type: 'includesStrings'; value: string[] }
+  | { type: 'startsWith'; value: string }
+  >;
+
+
 function RulesLabelFormSection({ rule, setRule }: { rule: ruleType, setRule: (rule: ruleType) => void }) {
   return (
     <div className="mb-4">
@@ -73,6 +88,8 @@ export default function NewRulesForm({ closeModal }: { closeModal: () => void })
       newEffect = { type: 'appendTextToItem', value: effectValue };
     } else if (effectType === 'makeItemBold') {
       newEffect = { type: 'makeItemBold', value: effectValue === 'true' };
+    } else if (effectType === 'replaceWith') {
+      newEffect = { type: 'replaceWith', value: effectValue };
     } else {
       return; // Invalid effect type
     }
@@ -139,13 +156,14 @@ export default function NewRulesForm({ closeModal }: { closeModal: () => void })
               <option value="">Select effect</option>
               <option value="appendTextToItem">Append text</option>
               <option value="makeItemBold">Make item bold</option>
+              <option value="replaceWith">Replace with</option>
             </select>
-            {effectType === 'appendTextToItem' && (
+            {(effectType === 'appendTextToItem' || effectType === 'replaceWith') && (
               <input
                 type="text"
                 value={effectValue}
                 onChange={(e) => setEffectValue(e.target.value)}
-                placeholder="Enter text to append"
+                placeholder={effectType === 'appendTextToItem' ? "Enter text to append" : "Enter replacement text"}
                 className="border-2 border-gray-300 rounded-md p-1"
               />
             )}

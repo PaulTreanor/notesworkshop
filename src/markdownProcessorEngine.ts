@@ -27,7 +27,7 @@ const markdownProcessorEngine = (markdown: markdownString, rules: ruleType[]): m
             return processedItem.content.startsWith(condition.value);
           case 'isDone':
             return processedItem.content.startsWith('- [x]') === condition.value;
-          // Add more condition types as needed
+          // Add more condition types as neede
           default:
             return false;
         }
@@ -36,6 +36,9 @@ const markdownProcessorEngine = (markdown: markdownString, rules: ruleType[]): m
       if (conditionsMet) {
         rule.effects.forEach(effect => {
           switch (effect.type) {
+            case 'replaceWith':
+              processedItem.content = effect.value;
+              break;
             case 'appendTextToItem':
               processedItem.content += ` ${effect.value}`;
               break;
@@ -43,6 +46,7 @@ const markdownProcessorEngine = (markdown: markdownString, rules: ruleType[]): m
               // Add a new line b/c bold
               processedItem.content = `\n**${processedItem.content}**`;
               break;
+            
             // Add more effect types as needed
           }
         });
