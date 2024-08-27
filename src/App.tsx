@@ -5,7 +5,7 @@ import RenderPane from './RenderPane';
 import { markdownString } from './App.type';
 import markdownProcessorEngine from './markdownProcessorEngine';
 import initialTodoListString from './assets/data/startingString';
-import { RulesProvider, useRules } from './context/RulesContext';
+import { RulesProvider, useRules } from './context/rulesContext';
 
 function AppContent() {
   const [markdown, setMarkdown] = useState<markdownString>(initialTodoListString);

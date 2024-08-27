@@ -5,6 +5,11 @@ type includsStringConditionType = {
   value: string[]
 }
 
+type startsWithConditionType = {
+  type: 'startsWith',
+  value: string
+}
+
 type isDoneConditionType = {
   type: 'isDone',
   value: boolean
@@ -29,7 +34,7 @@ type makeItemBoldEffectType = {
 
 // *** Conditions Array Type ***
 
-type conditionsArrayType = (includsStringConditionType | isDoneConditionType)[]
+type conditionsArrayType = (includsStringConditionType | isDoneConditionType | startsWithConditionType)[]
 
 // *** Effects Array Type ***
 

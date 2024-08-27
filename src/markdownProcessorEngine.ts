@@ -23,6 +23,8 @@ const markdownProcessorEngine = (markdown: markdownString, rules: ruleType[]): m
                 processedItem.content.toLowerCase().includes(word.trim().toLowerCase())
               )
             );
+          case 'startsWith':
+            return processedItem.content.startsWith(condition.value);
           case 'isDone':
             return processedItem.content.startsWith('- [x]') === condition.value;
           // Add more condition types as needed

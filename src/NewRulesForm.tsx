@@ -1,11 +1,32 @@
 import { useState } from 'react';
 import type { ruleType } from './rules/rules.type'
 import { useRules } from './context/rulesContext';
+import ConditionsPrinter from './rules/ConditionsPrinter';
+import EffectsPrinter from './rules/EffectsPrinter';
 
 const initialRule: ruleType = {
   rulesLabel: '',
   conditions: [],
   effects: []
+}
+
+function RulesLabelFormSection({ rule, setRule }: { rule: ruleType, setRule: (rule: ruleType) => void }) {
+  return (
+    <div className="mb-4">
+      <label htmlFor="ruleLabel" className="block text-lg font-medium text-gray-700">
+        Rule Label
+      </label>
+      <input
+        type="text"
+        id="ruleLabel"
+        name="ruleLabel"
+        size={30}
+        value={rule.rulesLabel}
+        onChange={(e) => setRule({ ...rule, rulesLabel: e.target.value })}
+        className="border-2 border-gray-300 rounded-md p-1"
+      />
+    </div>
+  )
 }
 
 export default function NewRulesForm({ closeModal }: { closeModal: () => void }) {
@@ -36,6 +57,8 @@ export default function NewRulesForm({ closeModal }: { closeModal: () => void })
       newCondition = { type: 'isDone', value: false };
     } else if (conditionType === 'includesStrings') {
       newCondition = { type: 'includesStrings', value: [conditionValue] };
+    } else if (conditionType === 'startsWith') {
+      newCondition = { type: 'startsWith', value: conditionValue };
     } else {
       return; // Invalid condition type
     }
@@ -61,33 +84,14 @@ export default function NewRulesForm({ closeModal }: { closeModal: () => void })
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="ruleLabel" className="block text-lg font-medium text-gray-700">
-            Rule Label
-          </label>
-          <input
-            type="text"
-            id="ruleLabel"
-            name="ruleLabel"
-            size={30}
-            value={rule.rulesLabel}
-            onChange={(e) => setRule({ ...rule, rulesLabel: e.target.value })}
-            className="border-2 border-gray-300 rounded-md p-1"
-          />
-        </div>
+        <RulesLabelFormSection rule={rule} setRule={setRule} />
         <div className="mb-4">
           <label htmlFor="conditions" className="block text-lg font-medium text-gray-700">
             Conditions
           </label>
           {/* Display added conditions */}
           <ul className="mt-2">
-            {rule.conditions.map((condition, index) => (
-              <li key={index}>
-                {condition.type === 'isDone'
-                  ? `if item is ${condition.value ? 'done' : 'not done'}`
-                  : `if item contains "${condition.value.join(', ')}"`}
-              </li>
-            ))}
+            <ConditionsPrinter conditions={rule.conditions} />
           </ul>
           <div className="flex items-center space-x-2">
             <span>If item</span>
@@ -100,23 +104,18 @@ export default function NewRulesForm({ closeModal }: { closeModal: () => void })
               <option value="isDone">is done</option>
               <option value="isDone-not">is not done</option>
               <option value="includesStrings">contains text</option>
+              <option value="startsWith">starts with</option>
             </select>
-            {conditionType === 'includesStrings' && (
-              <>
-                <input
-                  type="text"
-                  value={conditionValue}
-                  onChange={(e) => setConditionValue(e.target.value)}
-                  placeholder="enter, comma, separated, text"
-                  className="border-2 border-gray-300 rounded-md p-1"
-                />
-              </>
+            {(conditionType === 'includesStrings' || conditionType === 'startsWith') && (
+              <input
+                type="text"
+                value={conditionValue}
+                onChange={(e) => setConditionValue(e.target.value)}
+                placeholder={conditionType === 'includesStrings' ? "enter, comma, separated, text" : "enter starting text"}
+                className="border-2 border-gray-300 rounded-md p-1"
+              />
             )}
-            <button
-              type="button"
-              onClick={handleAddCondition}
-              className="bg-blue-500 text-white px-2 py-1 rounded"
-            >
+            <button type="button" onClick={handleAddCondition} className="bg-blue-500 text-white px-2 py-1 rounded">
               Add Condition
             </button>
           </div>
@@ -129,13 +128,7 @@ export default function NewRulesForm({ closeModal }: { closeModal: () => void })
           </label>
           {/* Display added effects */}
           <ul className="mt-2">
-            {rule.effects.map((effect, index) => (
-              <li key={index}>
-                {effect.type === 'appendTextToItem'
-                  ? `Append text: "${effect.value}"`
-                  : `Make item ${effect.value ? 'bold' : 'not bold'}`}
-              </li>
-            ))}
+            <EffectsPrinter effects={rule.effects} />
           </ul>
           <div className="flex items-center space-x-2">
             <select
@@ -166,20 +159,13 @@ export default function NewRulesForm({ closeModal }: { closeModal: () => void })
                 <option value="false">Not bold</option>
               </select>
             )}
-            <button
-              type="button"
-              onClick={handleAddEffect}
-              className="bg-blue-500 text-white px-2 py-1 rounded"
-            >
+            <button type="button" onClick={handleAddEffect} className="bg-blue-500 text-white px-2 py-1 rounded">
               Add Effect
             </button>
           </div>
         </div>
-        <button
-          type="submit"
-          className="bg-green-500 text-white px-4 py-2 rounded mt-4"
-        >
-          Save Rule
+        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded mt-4">
+          Save Rule 
         </button>
       </form>
     </div>
