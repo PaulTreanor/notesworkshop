@@ -14,7 +14,8 @@ function EffectsPrinter({effects}: {effects: effectsArrayType}) {
         effectText = `Replace with: "${effect.value}"`;
         break;
       default:
-        effectText = `Unknown effect: ${effect.type}`;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        effectText = `Unknown effect: ${(effect as any).type}`;
     }
     return <li key={index}>{effectText}</li>;
   });
